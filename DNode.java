@@ -1,24 +1,32 @@
-/** Node of a doubly linked list of strings */
-public class DNode {
-  protected String element;	// String element stored by a node
-  protected DNode next, prev;	// Pointers to next and previous nodes
-  /** Constructor that creates a node with given fields */
-  public DNode(String e, DNode p, DNode n) {
-    element = e;
-    prev = p;
-    next = n;
+package net.datastructures;
+/**
+ * A simple node class for a doubly-linked list.  Each DNode has a
+ * reference to a stored element, a previous node, and a next node.
+ * 
+ * @author Roberto Tamassia
+ */
+//begin#fragment DNode
+public class DNode<E> implements Position<E> {
+  private DNode<E> prev, next;	// References to the nodes before and after
+  private E element;	// Element stored in this position
+  /** Constructor */
+  public DNode(DNode<E> newPrev, DNode<E> newNext, E elem) {
+    prev = newPrev;
+    next = newNext;
+    element = elem;
   }
-  /** Returns the element of this node */
-  public String getElement() { return element; }
-  /** Returns the previous node of this node */
-  public DNode getPrev() { return prev; }
-  /** Returns the next node of this node */
-  public DNode getNext() { return next; }
-  /** Sets the element of this node */
-  public void setElement(String newElem) { element = newElem; }
-  /** Sets the previous node of this node */
-  public void setPrev(DNode newPrev) { prev = newPrev; }
-  /** Sets the next node of this node */
-  public void setNext(DNode newNext) { next = newNext; }
+  // Method from interface Position
+  public E element() throws InvalidPositionException {
+    if ((prev == null) && (next == null))
+      throw new InvalidPositionException("Position is not in a list!");
+    return element;
+  }
+  // Accessor methods
+  public DNode<E> getNext() { return next; }
+  public DNode<E> getPrev() { return prev; }
+  // Update methods
+  public void setNext(DNode<E> newNext) { next = newNext; }
+  public void setPrev(DNode<E> newPrev) { prev = newPrev; }
+  public void setElement(E newElement) { element = newElement; }
 }
-
+//end#fragment DNode
